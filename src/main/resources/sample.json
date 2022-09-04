@@ -1,0 +1,19 @@
+{
+  "retailOrderSystem": [
+    {
+      "orderId": "1234",
+      "productName": "laptop",
+      "orderStatus": "PLACED"
+    },
+    {
+      "orderId": "5678",
+      "productName": "mobile",
+      "orderStatus": "PLACED"
+    },
+    {
+      "orderId": "1111",
+      "productName": "tablet",
+      "orderStatus": "PLACED"
+    }
+  ]
+}
