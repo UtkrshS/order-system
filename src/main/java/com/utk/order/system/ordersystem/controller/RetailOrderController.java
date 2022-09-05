@@ -35,6 +35,13 @@ public class RetailOrderController {
         return product;
     }
 
+    @GetMapping("/order/status/{id}")
+    public String getOrderStatus(@PathVariable String id) {
+        LOG.info("Getting product details by ID: {}", id);
+        Optional<Product> product = this.orderRepository.findById(id);
+        return product.get().getOrderStatus();
+    }
+
     @GetMapping("/allproducts")
     public List<Product> getAllProducts() {
         LOG.info("Getting all product details");
