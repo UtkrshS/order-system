@@ -14,17 +14,17 @@ import static com.utk.order.system.ordersystem.config.Constants.TOPIC;
 public class KafkaOrderProducer {
     private final Logger LOG = LoggerFactory.getLogger(KafkaOrderProducer.class);
 
-    public KafkaOrderProducer(KafkaTemplate kafkaTemplate) {
+    public KafkaOrderProducer(KafkaTemplate<String, Object> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
     public void sendProductToTopic(final Product product) {
         LOG.info("Sending data to topic");
         try {
-            this.kafkaTemplate.send(new ProducerRecord(TOPIC, product));
+            this.kafkaTemplate.send(new ProducerRecord<>(TOPIC, product));
         } catch (Exception e) {
             LOG.error("Error occured while sending data to topic: {}", e.getMessage());
         }

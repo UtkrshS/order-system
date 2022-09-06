@@ -26,6 +26,7 @@ public class OrderRepositoryTest {
                 .build();
         this.orderRepository.save(product);
         Optional<Product> repoProduct = this.orderRepository.findByEmailId(product.getEmailId());
+        assert repoProduct.isPresent();
         assertThat(repoProduct.get().getName()).isEqualTo(product.getName());
     }
 }

@@ -47,6 +47,7 @@ public class RetailOrderController {
     public String getOrderStatus(@PathVariable String id) {
         LOG.info("Getting product details by ID: {}", id);
         Optional<Product> product = this.orderRepository.findById(id);
+        assert product.isPresent();
         return product.get().getOrderStatus();
     }
 

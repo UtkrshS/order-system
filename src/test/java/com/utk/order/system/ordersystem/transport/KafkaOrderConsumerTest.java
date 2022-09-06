@@ -22,7 +22,7 @@ public class KafkaOrderConsumerTest {
     }
 
     @Test
-    public void testListenToTopic() throws InterruptedException {
+    public void testListenToTopic() {
         Product product = Product.builder()
                 .name("abc")
                 .password("abc")

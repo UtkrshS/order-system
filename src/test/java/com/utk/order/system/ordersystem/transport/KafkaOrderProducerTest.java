@@ -10,7 +10,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import static org.mockito.ArgumentMatchers.any;
 
 public class KafkaOrderProducerTest {
-    private KafkaTemplate kafkaTemplate;
+    private KafkaTemplate<String, Object> kafkaTemplate;
     private KafkaOrderProducer kafkaOrderProducer;
 
     @Before
@@ -29,7 +29,7 @@ public class KafkaOrderProducerTest {
                 .orderStatus("PLACED")
                 .build();
         kafkaOrderProducer.sendProductToTopic(product);
-        Mockito.verify(kafkaTemplate, Mockito.times(1)).send((ProducerRecord) any());
+        Mockito.verify(kafkaTemplate, Mockito.times(1)).send((ProducerRecord<String, Object>) any());
     }
 }
 

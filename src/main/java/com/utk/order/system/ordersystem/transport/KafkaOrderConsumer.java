@@ -24,7 +24,7 @@ public class KafkaOrderConsumer {
     private MongoTemplate mongoTemplate;
 
     @KafkaListener(topics = TOPIC)
-    public void listenToTopic(final ConsumerRecord<String, Product> record) throws InterruptedException {
+    public void listenToTopic(final ConsumerRecord<String, Product> record) {
         Product product = record.value();
         LOG.info("Consuming message from topic: {}", product);
         Product updateOrder = Product.builder()
