@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomUserDetailService implements UserDetailsService {
 
+    public CustomUserDetailService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
     @Autowired
     private OrderRepository orderRepository;
 

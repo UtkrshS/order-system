@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,8 +17,15 @@ import java.util.Optional;
 import static com.utk.order.system.ordersystem.config.Constants.PLACED;
 
 @RestController
+@EnableWebMvc
 public class RetailOrderController {
     private final Logger LOG = LoggerFactory.getLogger(RetailOrderController.class);
+
+    public RetailOrderController(KafkaOrderProducer kafkaOrderProducer, OrderRepository orderRepository, PasswordEncoder passwordEncoder) {
+        this.kafkaOrderProducer = kafkaOrderProducer;
+        this.orderRepository = orderRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     private KafkaOrderProducer kafkaOrderProducer;
@@ -26,7 +34,7 @@ public class RetailOrderController {
     private OrderRepository orderRepository;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/order/{id}")
     public Optional<Product> getProductDetailsById(@PathVariable String id) {
@@ -46,6 +54,7 @@ public class RetailOrderController {
     public List<Product> getAllProducts() {
         LOG.info("Getting all product details");
         List<Product> product = this.orderRepository.findAll();
+        LOG.info("All product returned: {}", product);
         return product;
     }
 
@@ -71,7 +80,5 @@ public class RetailOrderController {
             return (ResponseEntity) ResponseEntity.badRequest();
         }
     }
-
-
 }
 
