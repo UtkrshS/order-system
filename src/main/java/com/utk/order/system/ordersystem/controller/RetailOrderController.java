@@ -38,17 +38,23 @@ public class RetailOrderController {
 
     @GetMapping("/order/{id}")
     public Optional<Product> getProductDetailsById(@PathVariable String id) {
-        LOG.info("Getting product details by ID: {}", id);
-        Optional<Product> product = this.orderRepository.findById(id);
-        return product;
+            LOG.info("Getting product details by ID: {}", id);
+            Optional<Product> product = Optional.of(this.orderRepository.findById(id).orElse(new Product("", "", "", id, "", "ID NOT FOUND")));
+            return product;
     }
 
     @GetMapping("/order/status/{id}")
     public String getOrderStatus(@PathVariable String id) {
-        LOG.info("Getting product details by ID: {}", id);
-        Optional<Product> product = this.orderRepository.findById(id);
-        assert product.isPresent();
-        return product.get().getOrderStatus();
+        try {
+            LOG.info("Getting product status by ID: {}", id);
+            Optional<Product> product = this.orderRepository.findById(id);
+            assert product.isPresent();
+            return product.get().getOrderStatus();
+        }
+        catch(Exception e) {
+            LOG.error("User not found. {}", e.getMessage());
+           return "Invalid ID or user not registered";
+        }
     }
 
     @GetMapping("/allproducts")

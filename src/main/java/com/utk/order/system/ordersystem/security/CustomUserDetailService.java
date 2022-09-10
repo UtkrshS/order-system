@@ -1,5 +1,6 @@
 package com.utk.order.system.ordersystem.security;
 
+import com.utk.order.system.ordersystem.model.Product;
 import com.utk.order.system.ordersystem.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,7 +19,15 @@ public class CustomUserDetailService implements UserDetailsService {
     private OrderRepository orderRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.orderRepository.findByEmailId(username).orElse(null);
+    public UserDetails loadUserByUsername(String username) {
+        try {
+            return this.orderRepository.findByEmailId(username).orElse(new Product(username, "", "", "", "", "USER_NOT_FOUND"));
+        }
+        catch(UsernameNotFoundException usernameNotFoundException) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        catch(Exception e) {
+            throw e;
+        }
     }
 }

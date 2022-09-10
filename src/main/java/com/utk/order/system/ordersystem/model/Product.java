@@ -21,11 +21,20 @@ import java.util.Collections;
 @Document(collection = "order-system")
 public class Product implements UserDetails {
 
-
     @JsonProperty("name")
     private String name;
     @JsonProperty("password")
     private String password;
+
+    public Product(String name, String password, String emailId, String orderId, String productName, String orderStatus) {
+        this.name = name;
+        this.password = password;
+        this.emailId = emailId;
+        this.orderId = orderId;
+        this.productName = productName;
+        this.orderStatus = orderStatus;
+    }
+
     @JsonProperty("emailId")
     private String emailId;
     @JsonProperty("orderId")
